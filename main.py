@@ -7,8 +7,8 @@ Database.create_products_table(database)
 
 Database.create_prices_table(database)
 
-Database.insert_product(database, 'Apple iPad 2019 128GB',
-                        'https://geizhals.de/apple-ipad-10-2-128gb-mw772fd-a-mw772ll-a-a2132800.html')
+Database.insert_product(database, 'MacBook Air 13 2020',
+                        'https://geizhals.de/apple-macbook-air-space-gray-mwtj2d-a-a2255044.html')
 
 
 product_ids = Database.get_product_ids(database)
