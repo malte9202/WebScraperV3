@@ -1,20 +1,30 @@
-import mysql.connector as mysql  # import mysql connector
-from config import host, user, password, database  # import credentials, host and database from config file
+import mysql.connector as mysql
+from config import host, user, password, database
 
 
-# function to create database connection
-def connect():
-    try:
-        db = mysql.connect(
+class Database(object):
+    def __init__(self):
+        self.db_connection = mysql.connect(
             host=host,
             user=user,
             password=password,
             database=database
         )
-        return db
-    except mysql.Error as err:
-        print(err)
+        self.db_cursor = self.db_connection.cursor()
 
+    def create_products_table(self):
+        create_statement = 'CREATE TABLE IF NOT EXISTS products (id INT AUTO_INCREMENT PRIMARY KEY,' \
+                           'name VARCHAR(255),' \
+                           'url VARCHAR(255));'
+        self.db_cursor.execute(create_statement)
+        self.db_connection.commit()
 
-connection = connect()
-cursor = connection.cursor(buffered=True)
+    def create_prices_table(self):
+        create_statement = 'CREATE TABLE IF NOT EXISTS prices (product_id INT NOT NULL,' \
+                           'price FLOAT NOT NULL,' \
+                           'scraped_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);'
+        self.db_cursor.execute(create_statement)
+        self.db_connection.commit()
+
+    def __del__(self):
+        self.db_connection.close()
