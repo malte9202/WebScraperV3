@@ -26,5 +26,15 @@ class Database(object):
         self.db_cursor.execute(create_statement)
         self.db_connection.commit()
 
+    def insert_product(self, name, url):
+        insert_statement = 'INSERT INTO products (name, url) VALUES (%s, %s);'
+        self.db_cursor.execute(insert_statement, (name, url))
+        self.db_connection.commit()
+
+    def insert_price(self, product_id, price):
+        insert_statement = 'INSERT INTO prices (product_id, price) VALUES (%s, %s);'
+        self.db_cursor.execute(insert_statement, (product_id, price))
+        self.db_connection.commit()
+
     def __del__(self):
         self.db_connection.close()
