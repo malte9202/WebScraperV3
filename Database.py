@@ -36,5 +36,19 @@ class Database(object):
         self.db_cursor.execute(insert_statement, (product_id, price))
         self.db_connection.commit()
 
+    def get_url(self, product_id: int) -> str:
+        query = 'SELECT url FROM products WHERE id = %s;'
+        self.db_cursor.execute(query, (product_id,))
+        url = self.db_cursor.fetchone()[0]
+        return url
+
+    def get_product_ids(self):
+        query = 'SELECT id FROM products;'
+        self.db_cursor.execute(query)
+        product_ids = []
+        for element in self.db_cursor.fetchall():
+            product_ids.append(element[0])
+        return product_ids
+
     def __del__(self):
         self.db_connection.close()
