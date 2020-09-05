@@ -26,12 +26,12 @@ class Database(object):
         self.db_cursor.execute(create_statement)
         self.db_connection.commit()
 
-    def insert_product(self, name, url):
+    def insert_product(self, name: str, url: str):
         insert_statement = 'INSERT INTO products (name, url) VALUES (%s, %s);'
         self.db_cursor.execute(insert_statement, (name, url))
         self.db_connection.commit()
 
-    def insert_price(self, product_id, price):
+    def insert_price(self, product_id: int, price: float):
         insert_statement = 'INSERT INTO prices (product_id, price) VALUES (%s, %s);'
         self.db_cursor.execute(insert_statement, (product_id, price))
         self.db_connection.commit()
