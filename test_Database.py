@@ -34,10 +34,17 @@ class TestDatabase(TestCase):
         Database.delete_price(test_database, test_id)
         Database.delete_product(test_database, test_id)
 
-'''
     def test_get_url(self):
-        self.fail()
+        test_database = Database()
+        Database.insert_product(test_database, 'test get url', 'https://testgeturl.com')
+        test_id = Database.execute_query(test_database,
+                                         'SELECT id FROM products WHERE name = \'test get url\';')[0][0]
+        test_query = f'SELECT url FROM products WHERE id = {test_id};'
+        self.assertEqual([('https://testgeturl.com',)], Database.execute_query(test_database, test_query))
+        Database.delete_product(test_database, test_id)
 
+
+'''
     def test_get_product_ids(self):
         self.fail()
     
