@@ -34,7 +34,6 @@ class TestDatabase(TestCase):
         Database.delete_price(test_database, test_id)
         Database.delete_product(test_database, test_id)
 
-
 '''
     def test_get_url(self):
         self.fail()
@@ -43,5 +42,11 @@ class TestDatabase(TestCase):
         self.fail()
     
     def test_execute_query(self):
+        self.fail()
+
+    def test_delete_product(self):
+        self.fail()
+    
+    def test_delete_price(self):
         self.fail()
 '''
