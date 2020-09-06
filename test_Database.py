@@ -43,17 +43,38 @@ class TestDatabase(TestCase):
         self.assertEqual([('https://testgeturl.com',)], Database.execute_query(test_database, test_query))
         Database.delete_product(test_database, test_id)
 
-
-'''
     def test_get_product_ids(self):
-        self.fail()
-    
+        test_database = Database()
+        product_ids = Database.get_product_ids(test_database)
+        for product_id in product_ids:
+            self.assertEqual(type(product_id), int)
+
     def test_execute_query(self):
-        self.fail()
+        test_database = Database()
+        count_result = Database.execute_query(test_database, 'SELECT COUNT(id) FROM products;')[0][0]
+        self.assertEqual(type(count_result), int)
+        list_result = Database.execute_query(test_database, 'SELECT * FROM prices;')
+        self.assertEqual(type(list_result), list)
 
     def test_delete_product(self):
-        self.fail()
-    
+        test_database = Database()
+        Database.insert_product(test_database, 'test delete', 'https://testdelete.com')
+        test_id = Database.execute_query(test_database, 'SELECT id FROM products WHERE name = \'test delete\';')[0][0]
+        Database.delete_product(test_database, test_id)
+        test_result = Database.execute_query(test_database,
+                                             'SELECT COUNT(1) FROM products where name = \'test delete\';')[0][0]
+        self.assertEqual(test_result, 0)
+
     def test_delete_price(self):
-        self.fail()
-'''
+        test_database = Database()
+        Database.insert_product(test_database, 'test delete', 'https://testdelete.com')
+        test_id = Database.execute_query(test_database, 'SELECT id FROM products WHERE name = \'test delete\';')[0][0]
+        Database.insert_price(test_database, test_id, 777.77)
+        Database.delete_price(test_database, test_id)
+        test_result = Database.execute_query(test_database,
+                                             f'SELECT COUNT(1) FROM prices WHERE product_id = {test_id};')[0][0]
+        self.assertEqual(test_result, 0)
+        Database.delete_product(test_database, test_id)
+
+
+
