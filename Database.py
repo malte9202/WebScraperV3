@@ -10,7 +10,7 @@ class Database(object):
             password=password,
             database=database
         )
-        self.db_cursor = self.db_connection.cursor()
+        self.db_cursor = self.db_connection.cursor(buffered=True)
 
     def create_products_table(self):
         create_statement = 'CREATE TABLE IF NOT EXISTS products (id INT AUTO_INCREMENT PRIMARY KEY,' \
@@ -49,6 +49,21 @@ class Database(object):
         for element in self.db_cursor.fetchall():
             product_ids.append(element[0])
         return product_ids
+
+    def execute_query(self, query: str):
+        self.db_cursor.execute(query)
+        result = self.db_cursor.fetchall()
+        return result
+
+    def delete_product(self, product_id: int):
+        delete_statement = 'DELETE FROM products WHERE id = %s;'
+        self.db_cursor.execute(delete_statement, (product_id,))
+        self.db_connection.commit()
+
+    def delete_price(self, product_id: int):
+        delete_statement = 'DELETE FROM prices WHERE product_id = %s;'
+        self.db_cursor.execute(delete_statement, (product_id,))
+        self.db_connection.commit()
 
     def __del__(self):
         self.db_connection.close()
