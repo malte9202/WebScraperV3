@@ -7,9 +7,10 @@ Database.create_products_table(database)
 
 Database.create_prices_table(database)
 
+'''
 Database.insert_product(database, 'MacBook Air 13 2020',
                         'https://geizhals.de/apple-macbook-air-space-gray-mwtj2d-a-a2255044.html')
-
+'''
 
 product_ids = Database.get_product_ids(database)
 
