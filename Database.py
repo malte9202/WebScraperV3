@@ -62,6 +62,9 @@ class Database(object):
         result = self.db_cursor.fetchall()
         return result
 
+    def execute_query_without_fetch(self, query: str):
+        return self.db_cursor.execute(query)
+
     def delete_product(self, product_id: int):
         delete_statement = 'DELETE FROM products WHERE id = %s;'
         self.db_cursor.execute(delete_statement, (product_id,))
