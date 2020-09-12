@@ -27,7 +27,7 @@ class Products(Resource):
 
     @staticmethod
     def post():
-        db_connection.insert_product()
+        db_connection.insert_product
 
 
 class Prices(Resource):
