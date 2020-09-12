@@ -3,9 +3,9 @@ from Scraper import Scraper
 
 database = Database()
 
-Database.create_products_table(database)
+# Database.create_products_table(database)
 
-Database.create_prices_table(database)
+# Database.create_prices_table(database)
 
 '''
 Database.insert_product(database, 'MacBook Air 13 2020',

@@ -19,6 +19,20 @@ class Database(object):
         self.db_cursor.execute(create_statement)
         self.db_connection.commit()
 
+    def execute_migration(self, migrations):
+        self.db_cursor.execute('CREATE TABLE IF NOT EXISTS migrations '
+                               '(id INT AUTO_INCREMENT PRIMARY KEY, '
+                               'name VARCHAR(255), '
+                               'executed BOOLEAN DEFAULT FALSE);')
+        for migration in migrations:
+            self.db_cursor.execute('INSERT INTO migrations (name) VALUES (%s);', (migration,))
+            self.db_cursor.execute(migrations[migration])
+            self.db_connection.commit()
+            self.db_cursor.execute('UPDATE migrations '
+                                   'SET executed = 1 '
+                                   'WHERE name = (%s);', (migration,))
+            self.db_connection.commit()
+
     def create_prices_table(self):
         create_statement = 'CREATE TABLE IF NOT EXISTS prices (product_id INT NOT NULL,' \
                            'price FLOAT NOT NULL,' \
