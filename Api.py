@@ -26,8 +26,9 @@ class Products(Resource):
         return result
 
     @staticmethod
-    def post():
-        db_connection.insert_product
+    def post(name, price_threshold, url):
+        db_connection.insert_product(name, price_threshold, url)
+        return 'sucess'
 
 
 class Prices(Resource):
