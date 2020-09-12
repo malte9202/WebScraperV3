@@ -12,7 +12,7 @@ api = Api(app)
 
 class Products(Resource):
     @staticmethod
-    def get_products():
+    def get():
         raw_result = db_connection.execute_query('SELECT name, price_threshold, url FROM products;')
         result_list = []
         for product in raw_result:
@@ -25,17 +25,30 @@ class Products(Resource):
         result = {'products': result_list}
         return result
 
+    @staticmethod
+    def post():
+        db_connection.insert_product()
+
 
 class Prices(Resource):
     @staticmethod
-    def get_prices():
-        raw_result = db_connection.execute_query('SELECT product_id, price, scraped_at FROM prices;')
+    def get():
+        raw_result = db_connection.execute_query('SELECT product_id, price FROM prices;')
         result = {'prices': raw_result}
         return result
 
 
+class PriceProductId(Resource):
+    @staticmethod
+    def get(product_id):
+        raw_result = db_connection.execute_query(f'SELECT price FROM prices WHERE product_id = {product_id}')
+        result = {'data': raw_result}
+        return result
+
+
 api.add_resource(Products, '/products')  # Route_1
-api.add_resource((Prices, '/prices'))  # Route_2
+api.add_resource(Prices, '/prices')  # Route_2
+api.add_resource(PriceProductId, '/prices/<product_id>')  # Route_3
 
 if __name__ == '__main__':
     app.run()
