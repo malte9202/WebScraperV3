@@ -12,15 +12,6 @@ class Database(object):
         )
         self.db_cursor = self.db_connection.cursor(buffered=True)
 
-    '''
-    def create_products_table(self):
-        create_statement = 'CREATE TABLE IF NOT EXISTS products (id INT AUTO_INCREMENT PRIMARY KEY,' \
-                           'name VARCHAR(255),' \
-                           'url VARCHAR(255));'
-        self.db_cursor.execute(create_statement)
-        self.db_connection.commit()
-    '''
-
     def execute_migration(self, migrations):
         self.db_cursor.execute('CREATE TABLE IF NOT EXISTS migrations '
                                '(id INT AUTO_INCREMENT PRIMARY KEY, '
@@ -41,15 +32,6 @@ class Database(object):
                 self.db_connection.commit()
             else:
                 pass
-
-    '''
-    def create_prices_table(self):
-        create_statement = 'CREATE TABLE IF NOT EXISTS prices (product_id INT NOT NULL,' \
-                           'price FLOAT NOT NULL,' \
-                           'scraped_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);'
-        self.db_cursor.execute(create_statement)
-        self.db_connection.commit()
-    '''
 
     def insert_product(self, name: str, url: str):
         insert_statement = 'INSERT INTO products (name, url) VALUES (%s, %s);'

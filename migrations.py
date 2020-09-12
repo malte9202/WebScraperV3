@@ -17,13 +17,12 @@ migrations = {
 }
 '''
 
-migrations = {
-    'migration_0001': 'ALTER TABLE products '
-                      'ADD COLUMN price_threshold FLOAT AFTER name'
-}
 
-database = Database()
-
-
-Database.execute_migration(database, migrations)
+def migrate():
+    migrations = {
+        'migration_0001': 'ALTER TABLE products '
+                          'ADD COLUMN price_threshold FLOAT AFTER name'
+    }
+    database = Database()
+    Database.execute_migration(database, migrations)
 
