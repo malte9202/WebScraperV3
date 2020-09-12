@@ -13,8 +13,8 @@ api = Api(app)
 class Products(Resource):
     @staticmethod
     def get():
-        raw_result = db_connection.execute_query_without_fetch('SELECT name FROM products;')
-        result = {'products': [dict(zip(tuple(raw_result.keys()), i)) for i in raw_result]}
+        raw_result = db_connection.execute_query('SELECT name, url FROM products;')
+        result = {'products': raw_result}
         return jsonify(result)
 
 
