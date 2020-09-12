@@ -3,21 +3,10 @@ from Database import Database
 
 
 class TestDatabase(TestCase):
-    def test_create_products_table(self):
-        test_database = Database()
-        Database.create_products_table(test_database)
-        test_query = 'SHOW TABLES;'
-        self.assertIn(('products',), Database.execute_query(test_database, test_query))
-
-    def test_create_prices_table(self):
-        test_database = Database()
-        Database.create_prices_table(test_database)
-        test_query = 'SHOW TABLES;'
-        self.assertIn(('prices',), Database.execute_query(test_database, test_query))
 
     def test_insert_product(self):
         test_database = Database()
-        Database.insert_product(test_database, 'test product', 'https://testproducturl.com')
+        Database.insert_product(test_database, 'test product', 99.99, 'https://testproducturl.com')
         test_query = 'SELECT url FROM products WHERE name = \'test product\';'
         self.assertEqual([('https://testproducturl.com',)], Database.execute_query(test_database, test_query))
         test_id = Database.execute_query(test_database, 'SELECT id FROM products WHERE name = \'test product\';')[0][0]
@@ -25,7 +14,7 @@ class TestDatabase(TestCase):
 
     def test_insert_price(self):
         test_database = Database()
-        Database.insert_product(test_database, 'test price product', 'https://testpriceurl.com')
+        Database.insert_product(test_database, 'test price product', 99.99, 'https://testpriceurl.com')
         test_id = Database.execute_query(test_database,
                                          'SELECT id FROM products WHERE name = \'test price product\';')[0][0]
         Database.insert_price(test_database, test_id, 9999.99)
@@ -36,7 +25,7 @@ class TestDatabase(TestCase):
 
     def test_get_url(self):
         test_database = Database()
-        Database.insert_product(test_database, 'test get url', 'https://testgeturl.com')
+        Database.insert_product(test_database, 'test get url', 99.99, 'https://testgeturl.com')
         test_id = Database.execute_query(test_database,
                                          'SELECT id FROM products WHERE name = \'test get url\';')[0][0]
         test_query = f'SELECT url FROM products WHERE id = {test_id};'
@@ -58,7 +47,7 @@ class TestDatabase(TestCase):
 
     def test_delete_product(self):
         test_database = Database()
-        Database.insert_product(test_database, 'test delete', 'https://testdelete.com')
+        Database.insert_product(test_database, 'test delete', 99.99, 'https://testdelete.com')
         test_id = Database.execute_query(test_database, 'SELECT id FROM products WHERE name = \'test delete\';')[0][0]
         Database.delete_product(test_database, test_id)
         test_result = Database.execute_query(test_database,
@@ -67,7 +56,7 @@ class TestDatabase(TestCase):
 
     def test_delete_price(self):
         test_database = Database()
-        Database.insert_product(test_database, 'test delete', 'https://testdelete.com')
+        Database.insert_product(test_database, 'test delete', 99.99, 'https://testdelete.com')
         test_id = Database.execute_query(test_database, 'SELECT id FROM products WHERE name = \'test delete\';')[0][0]
         Database.insert_price(test_database, test_id, 777.77)
         Database.delete_price(test_database, test_id)
