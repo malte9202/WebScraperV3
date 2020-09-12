@@ -33,9 +33,9 @@ class Database(object):
             else:
                 pass
 
-    def insert_product(self, name: str, url: str):
-        insert_statement = 'INSERT INTO products (name, url) VALUES (%s, %s);'
-        self.db_cursor.execute(insert_statement, (name, url))
+    def insert_product(self, name: str, price_threshold: float, url: str):
+        insert_statement = 'INSERT INTO products (name, price_threshold, url) VALUES (%s, %s, %s);'
+        self.db_cursor.execute(insert_statement, (name, price_threshold, url))
         self.db_connection.commit()
 
     def insert_price(self, product_id: int, price: float):
