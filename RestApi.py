@@ -15,6 +15,11 @@ parser.add_argument('price_threshold', type=float, help='price threshold for not
 parser.add_argument('url', type=str, help='geizhals product url')
 
 
+@app.route('/')
+def home():
+    return 'Price Alert App'
+
+
 class ProductList(Resource):  # class for list of products
     def get(self):
         raw_result = db_connection.execute_query('SELECT name, price_threshold, url FROM products;')
