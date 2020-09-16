@@ -1,5 +1,5 @@
 # import required flask extensions
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import reqparse, Api, Resource
 # import Database class
 from Database import Database
@@ -17,7 +17,7 @@ parser.add_argument('url', type=str, help='geizhals product url')
 
 @app.route('/')
 def home():
-    return 'Price Alert App'
+    return render_template('WebApp.html')
 
 
 class ProductList(Resource):  # class for list of products
