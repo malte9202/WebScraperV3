@@ -1,8 +1,9 @@
 # import required flask extensions
-from flask import Flask, render_template
+from flask import Flask, render_template, Markup
 from flask_restful import reqparse, Api, Resource
 # import Database class
 from Database import Database
+from WebApp import render_html
 
 db_connection = Database()  # init db connection
 app = Flask(__name__)  # create flask app
@@ -17,7 +18,7 @@ parser.add_argument('url', type=str, help='geizhals product url')
 
 @app.route('/')
 def home():
-    return render_template('WebApp.html')
+    return Markup(render_html())
 
 
 class ProductList(Resource):  # class for list of products
@@ -31,7 +32,7 @@ class ProductList(Resource):  # class for list of products
                 'url': product[2]
             }
             result_list.append(product_dict)
-        result = {'products': result_list}
+        result = result_list
         return result
 
 
