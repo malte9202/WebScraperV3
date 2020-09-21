@@ -23,25 +23,27 @@ def render_html():
                     line('li', 'receive mail notifications if the price drops below a limit you defined')
                     line('li', 'view current and best prices for the products')
             with tag('table'):
-                with tag('tr'):
-                    with tag('th'):
-                        text('name')
-                    with tag('th'):
-                        text('price_threshold')
-                    with tag('th'):
-                        text('url')
-            productlist = requests.get('http://localhost:5000/productlist').json()
-            for product in productlist:
-                name = product['name']
-                price_threshold = product['price_threshold']
-                url = product['url']
-                with tag('tr'):
-                    with tag('td'):
-                        text(name)
-                    with tag('td'):
-                        text(price_threshold)
-                    with tag('td'):
-                        text(url)
+                with tag('thead'):
+                    with tag('tr'):
+                        with tag('th'):
+                            text('Name')
+                        with tag('th'):
+                            text('Price Limit')
+                        with tag('th'):
+                            text('URL')
+                with tag('tbody'):
+                    productlist = requests.get('http://localhost:5000/productlist').json()
+                    for product in productlist:
+                        name = product['name']
+                        price_threshold = product['price_threshold']
+                        url = product['url']
+                        with tag('tr'):
+                            with tag('td'):
+                                text(name)
+                            with tag('td'):
+                                text(price_threshold)
+                            with tag('td'):
+                                text(url)
         html_result = doc.getvalue()
         return html_result
 
