@@ -1,3 +1,7 @@
+# files to ignore for git
+# ignore the .env because it contains credentials
 .env
+# ignore all .idea files
 *.idea
+# ignore the pycache
 __pycache__
