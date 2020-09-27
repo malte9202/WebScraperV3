@@ -44,6 +44,8 @@ def render_html():
                                 text(price_threshold)
                             with tag('td'):
                                 text(url)
+            with tag('h2'):
+                text('Add new product')
         html_result = doc.getvalue()
         return html_result
 
