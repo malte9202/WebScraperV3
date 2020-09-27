@@ -1,0 +1,7 @@
+Packages are installed in virtual environment:
+- create: python3 -m venv webscraper
+- activate: source webscraper/bin/activate
+
+For this project the following modules were used:
+- os (use functions of the operating system)
+- dotenv (used to access .env file)
